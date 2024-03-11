@@ -11,33 +11,73 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CoutrysListFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class CoutrysListFragment extends Fragment {
 
     ArrayList<Country> states = new ArrayList<Country>();
-
-    ListView countriesList ;
-
-    public CoutrysListFragment() {
-
+    ListView countriesList;
+    interface OnFragmentSendDataListener {
+        void onSendData(Country data);
     }
 
+    private OnFragmentSendDataListener fragmentSendDataListener;
 
-    public static CoutrysListFragment newInstance(String param1, String param2) {
-        CoutrysListFragment fragment = new CoutrysListFragment();
-        return fragment;
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            fragmentSendDataListener = (OnFragmentSendDataListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " должен реализовывать интерфейс OnFragmentInteractionListener");
+        }
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setInitialData();
+
+        String[] names = new String[] {
+                "Moldova","Kazakhstan","United States of America","Ukraine","Belarus",
+                "India","China","Romania","France","Germany"
+        };
+        int[] id = new int[]{
+                R.drawable.moldova, R.drawable.moldova,R.drawable.kazakhstan,
+                R.drawable.ukraine , R.drawable.germany, R.drawable.france,
+                R.drawable.belarus, R.drawable.romania,R.drawable.usa,
+                R.drawable.china
+        };
+
+        View view = inflater.inflate(R.layout.fragment_coutrys_list, container, false);
+        // получаем элемент ListView
+        ListView countriesList = view.findViewById(R.id.countriesList);
+        // создаем адаптер
+        StateAdapter stateAdapter = new StateAdapter(getContext(), R.layout.list_item,states);
+        // устанавливаем для списка адаптер
+        countriesList.setAdapter(stateAdapter);
+        // добавляем для списка слушатель
+
+        AdapterView.OnItemClickListener itemListener = new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                Country item = (Country) parent.getItemAtPosition(position);
+
+                fragmentSendDataListener.onSendData(item);
+            }
+        };
+        countriesList.setOnItemClickListener(itemListener);
+        return view;
+    }
+
+
+    private void setInitialData(){
+
         states.add(new Country ("Индия", R.drawable.india,3500,"Нью-Дели"));
         states.add(new Country ("Молдова", R.drawable.moldova,200,"Кишинёв"));
         states.add(new Country ("Казахстан",  R.drawable.kazakhstan,550,"Астана"));
@@ -48,36 +88,5 @@ public class CoutrysListFragment extends Fragment {
         states.add(new Country ("Румыния",  R.drawable.romania,760,"Бухарест"));
         states.add(new Country ("США", R.drawable.usa,2330,"Вашингтон"));
         states.add(new Country ("Китай", R.drawable.china,3200,"Пекин"));
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-
-
-        View view = inflater.inflate(R.layout.fragment_coutrys_list,container,false);
-
-        ListView listView = (ListView)view.findViewById(R.id.countriesList);
-        StateAdapter stateAdapter = new StateAdapter(getActivity(), R.layout.list_item,states);
-
-        countriesList.setAdapter(stateAdapter);
-
-        AdapterView.OnItemClickListener itemListener = new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-
-
-                Country selectedState = (Country) parent.getItemAtPosition(position);
-                Intent intent = new Intent(getActivity(), DetailsActivity.class);
-                intent.putExtra("name",selectedState.getName());
-                intent.putExtra("id",selectedState.getFlagId());
-                intent.putExtra("capital",selectedState.getCapital());
-                intent.putExtra("size",selectedState.getSize());
-                startActivity(intent);
-            }
-        };
-        countriesList.setOnItemClickListener(itemListener);
-        return inflater.inflate(R.layout.fragment_coutrys_list, container, false);
     }
 }
