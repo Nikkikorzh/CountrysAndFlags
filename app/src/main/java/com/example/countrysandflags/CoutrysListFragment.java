@@ -20,26 +20,11 @@ public class CoutrysListFragment extends Fragment {
 
     ArrayList<Country> states = new ArrayList<Country>();
     ListView countriesList;
-    interface OnFragmentSendDataListener {
-        void onSendData(Country data);
-    }
-
-    private OnFragmentSendDataListener fragmentSendDataListener;
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        try {
-            fragmentSendDataListener = (OnFragmentSendDataListener) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString()
-                    + " должен реализовывать интерфейс OnFragmentInteractionListener");
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_coutrys_list, container, false);
         super.onCreate(savedInstanceState);
         setInitialData();
 
@@ -54,24 +39,38 @@ public class CoutrysListFragment extends Fragment {
                 R.drawable.china
         };
 
-        View view = inflater.inflate(R.layout.fragment_coutrys_list, container, false);
+
         // получаем элемент ListView
-        ListView countriesList = view.findViewById(R.id.countriesList);
+        countriesList = view.findViewById(R.id.countriesList);
         // создаем адаптер
         StateAdapter stateAdapter = new StateAdapter(getContext(), R.layout.list_item,states);
         // устанавливаем для списка адаптер
         countriesList.setAdapter(stateAdapter);
         // добавляем для списка слушатель
 
-        AdapterView.OnItemClickListener itemListener = new AdapterView.OnItemClickListener() {
+        countriesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                Country item = (Country) parent.getItemAtPosition(position);
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                fragmentSendDataListener.onSendData(item);
+                Country country = states.get(position);
+
+
+                Bundle bundle = new Bundle();
+                bundle.putInt("flagId", country.getFlagId());
+                bundle.putString("countryName", country.getName());
+                bundle.putString("capital", country.getCapital());
+                bundle.putInt("area", country.getSize());
+
+
+                DetailsFragment detailsFragment = new DetailsFragment();
+                detailsFragment.setArguments(bundle);
+                requireActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, detailsFragment)
+                        .addToBackStack(null)
+                        .commit();
             }
-        };
-        countriesList.setOnItemClickListener(itemListener);
+        });
         return view;
     }
 

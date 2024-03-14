@@ -14,24 +14,38 @@ import android.widget.TextView;
 
 public class DetailsFragment extends Fragment {
 
+    TextView textView;
+
+    TextView textView2;
+
+    TextView textView3;
+
+    ImageView imageView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_details, container, false);
+        imageView = view.findViewById(R.id.flag_image_view);
+        textView2 = view.findViewById(R.id.country_name_text_view);
+        textView3 = view.findViewById(R.id.capital_text_view);
+        textView = view.findViewById(R.id.area_text_view);
 
-        return inflater.inflate(R.layout.fragment_details, container, false);
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            int flagId = arguments.getInt("flagId");
+            String countryName = arguments.getString("countryName");
+            String capital = arguments.getString("capital");
+            int area = arguments.getInt("area");
+
+
+            imageView.setImageResource(flagId);
+            textView2.setText(countryName);
+            textView3.setText("Столица: " + capital);
+            textView.setText("Площадь: " + area);
+        }
+        return view;
     }
 
-    public void UpdateData(Country data) {
-        TextView tv1 = getView().findViewById(R.id.textView);
-        TextView tv2 = getView().findViewById(R.id.textView2);
-        TextView tv3 = getView().findViewById(R.id.textView3);
-        ImageView img = getView().findViewById(R.id.imageView);
-
-        tv1.setText(data.getName());
-        tv2.setText(data.getCapital());
-        tv3.setText(Integer.toString(data.getSize()));
-        img.setImageResource(data.getFlagId());
-    }
 
 }

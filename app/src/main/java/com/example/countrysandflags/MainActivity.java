@@ -1,6 +1,7 @@
 package com.example.countrysandflags;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Context;
@@ -15,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity implements CoutrysListFragment.OnFragmentSendDataListener {
+public class MainActivity extends AppCompatActivity  {
 
     ArrayList<Country> states = new ArrayList<Country>();
     ListView countriesList;
@@ -24,6 +25,22 @@ public class MainActivity extends AppCompatActivity implements CoutrysListFragme
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if (savedInstanceState == null) {
+
+            CoutrysListFragment countryListFragment = new CoutrysListFragment();
+
+
+            FragmentManager fragmentManager = getSupportFragmentManager();
+
+
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+
+            fragmentTransaction.add(R.id.fragment_container, countryListFragment);
+
+
+            fragmentTransaction.commit();
+        }
 //        String[] names = new String[] {
 //                "Moldova","Kazakhstan","United States of America","Ukraine","Belarus",
 //                "India","China","Romania","France","Germany"
@@ -56,13 +73,9 @@ public class MainActivity extends AppCompatActivity implements CoutrysListFragme
 //        countriesList.setOnItemClickListener(itemListener);
 
 
+
     }
 
-    public void onSendData(Country item) {
-        DetailsFragment fragment = (DetailsFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.detailFragment);
-        if (fragment != null)
-            fragment.UpdateData(item);
-    }
+
 }
 
