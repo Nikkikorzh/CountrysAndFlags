@@ -6,8 +6,8 @@
     android:layout_height="wrap_content">
     <ImageView
         android:id="@+id/flag"
-        android:layout_width="40dp"
-        android:layout_height="50dp"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/name"
         app:layout_constraintTop_toTopOf="parent"
@@ -18,8 +18,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="12dp"
-        android:textSize="38dp"
-        android:text="Название"
+        android:textSize="40dp"
+        android:text="Country"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/flag"
         app:layout_constraintTop_toTopOf="parent" />

@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity  {
+public class MainActivity extends AppCompatActivity{
 
     ArrayList<Country> states = new ArrayList<Country>();
     ListView countriesList;
@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity  {
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
 
-            fragmentTransaction.add(R.id.fragment_container, countryListFragment);
+            fragmentTransaction.add(R.id.cont, countryListFragment);
 
 
             fragmentTransaction.commit();
@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity  {
 
 
     }
+
 
 
 }

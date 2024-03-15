@@ -3,7 +3,10 @@ package com.example.countrysandflags;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,38 +17,32 @@ import android.widget.TextView;
 
 public class DetailsFragment extends Fragment {
 
-    TextView textView;
+    private ImageView flagImageView;
+    private TextView countryNameTextView;
+    private TextView capitalTextView;
+    private TextView areaTextView;
 
-    TextView textView2;
-
-    TextView textView3;
-
-    ImageView imageView;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_details, container, false);
-        imageView = view.findViewById(R.id.flag_image_view);
-        textView2 = view.findViewById(R.id.country_name_text_view);
-        textView3 = view.findViewById(R.id.capital_text_view);
-        textView = view.findViewById(R.id.area_text_view);
 
-        Bundle arguments = getArguments();
-        if (arguments != null) {
-            int flagId = arguments.getInt("flagId");
-            String countryName = arguments.getString("countryName");
-            String capital = arguments.getString("capital");
-            int area = arguments.getInt("area");
+        flagImageView = view.findViewById(R.id.flagImage);
+        countryNameTextView = view.findViewById(R.id.countryName);
+        capitalTextView = view.findViewById(R.id.countryCapital);
+        areaTextView = view.findViewById(R.id.countrySize);
 
+        DetailsViewModel detailsViewModel = new ViewModelProvider(requireActivity()).get(DetailsViewModel.class);
+        detailsViewModel.getSelectedCountry().observe(getViewLifecycleOwner(), country -> {
+            countryNameTextView.setText("Country: "+country.getName());
+            flagImageView.setImageResource(country.getFlagId());
+            areaTextView.setText("Size:" + Integer.toString(country.getSize()));
+            capitalTextView.setText("Capital: " + country.getCapital());
 
-            imageView.setImageResource(flagId);
-            textView2.setText(countryName);
-            textView3.setText("Столица: " + capital);
-            textView.setText("Площадь: " + area);
-        }
+        });
+
         return view;
     }
-
 
 }

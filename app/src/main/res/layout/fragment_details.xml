@@ -5,32 +5,30 @@
     android:padding="16dp">
 
     <ImageView
-        android:id="@+id/flag_image_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:scaleType="fitCenter" />
+        android:id="@+id/flagImage"
+        android:layout_width="375dp"
+        android:layout_height="120dp" />
 
     <TextView
-        android:id="@+id/country_name_text_view"
+        android:id="@+id/countryCapital"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:paddingTop="16dp" />
+        android:paddingTop="8dp"
+        android:textSize="34sp" />
 
     <TextView
-        android:id="@+id/capital_text_view"
+        android:id="@+id/countryName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:paddingTop="8dp" />
+        android:paddingTop="16dp"
+        android:textSize="38sp"
+        />
 
     <TextView
-        android:id="@+id/area_text_view"
+        android:id="@+id/countrySize"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:paddingTop="8dp" />
+        android:paddingTop="8dp"
+        android:textSize="34sp" />
 
 </LinearLayout>

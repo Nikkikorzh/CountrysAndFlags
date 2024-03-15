@@ -16,15 +16,17 @@ public class StateAdapter extends ArrayAdapter<Country> {
     private int layout;
     private List<Country> states;
 
-    public StateAdapter(Context context, int resource, List<Country> countries) {
-        super(context, resource, countries);
-        this.states = countries;
-        this.layout = resource;
-        this.inflater = LayoutInflater.from(context);
+    private Context context;
+
+
+    public StateAdapter(Context context, List<Country> states) {
+        super(context, R.layout.list_item, states);
+        this.context = context;
+        this.states = states;
     }
     public View getView(int position, View convertView, ViewGroup parent) {
-
-        View view=inflater.inflate(this.layout, parent, false);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view=inflater.inflate(R.layout.list_item, parent, false);
 
         ImageView flagView = view.findViewById(R.id.flag);
         TextView nameView = view.findViewById(R.id.name);
