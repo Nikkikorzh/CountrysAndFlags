@@ -7,17 +7,17 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class Adapter extends ArrayAdapter<Country> {
+public class StateAdapter extends RecyclerView.Adapter<StateAdapter.ViewHolder> {
 
     private LayoutInflater inflater;
     private int layout;
     private List<Country> states;
 
-    public Adapter(Context context, int resource, List<Country> countries) {
-        super(context, resource, countries);
+    public StateAdapter(Context context, int resource, List<Country> countries) {
         this.states = countries;
         this.layout = resource;
         this.inflater = LayoutInflater.from(context);
@@ -35,5 +35,21 @@ public class Adapter extends ArrayAdapter<Country> {
         nameView.setText(country.getName());
 
         return view;
+    }
+
+
+    @Override
+    public StateAdapter.myView onCreateViewHolder(ViewGroup parent, int viewType) {
+        return null;
+    }
+
+    @Override
+    public void onBindViewHolder(StateAdapter.ViewHolder holder, int position) {
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return 0;
     }
 }
