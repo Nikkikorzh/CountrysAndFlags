@@ -5,24 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <ImageView
-        android:id="@+id/flag"
-        android:layout_width="70dp"
-        android:layout_height="50dp"
+        android:id="@+id/flagItem"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/name"
+        app:layout_constraintRight_toLeftOf="@+id/nameItem"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
 
     <TextView
-        android:id="@+id/name"
+        android:id="@+id/nameItem"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_margin="28dp"
-        android:textSize="34dp"
-        android:text="Название"
+        android:layout_marginLeft="12dp"
+        android:textSize="40dp"
+        android:text="Country"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/flag"
+        app:layout_constraintLeft_toRightOf="@+id/flagItem"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

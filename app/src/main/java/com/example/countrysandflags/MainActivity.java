@@ -1,8 +1,10 @@
 package com.example.countrysandflags;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,44 +15,48 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
 
     ArrayList<Country> states = new ArrayList<Country>();
-    ListView countriesList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setInitialData();
-        String[] names = new String[] {
-                "Moldova","Kazakhstan","United States of America","Ukraine","Belarus",
-                "India","China","Romania","France","Germany"
-        };
-        int[] id = new int[]{
-                R.drawable.moldova, R.drawable.moldova,R.drawable.kazakhstan,
-                R.drawable.ukraine , R.drawable.germany, R.drawable.france,
-                R.drawable.belarus, R.drawable.romania,R.drawable.usa,
-                R.drawable.china
-        };
+        RecyclerView recyclerView = findViewById(R.id.countries);
+        StateAdapter.OnCountryClickListener stateClickListener = new StateAdapter.OnCountryClickListener() {
+            @Override
+            public void onStateClick(Country state, int position) {
 
-        countriesList = findViewById(R.id.countriesList);
-        Adapter adapter = new Adapter((Context) this, R.layout.list_item,states);
-        countriesList.setAdapter(adapter);
+                Country country = states.get(position);
 
+                Intent intent = new Intent(MainActivity.this,DetailActivity.class);
+                intent.putExtra("flagId",country.getFlagId());
+                intent.putExtra("name",country.getName());
+                intent.putExtra("capital",country.getCapital());
+                intent.putExtra("size",country.getSize());
+                startActivity(intent);
+            }
+        };
+        StateAdapter adapter = new StateAdapter(this, states, stateClickListener);
+        recyclerView.setAdapter(adapter);
 
 
     }
     private void setInitialData(){
 
-        states.add(new Country ("Индия", R.drawable.india));
-        states.add(new Country ("Молдова", R.drawable.moldova));
-        states.add(new Country ("Казахстан",  R.drawable.kazakhstan));
-        states.add(new Country ("Украина", R.drawable.ukraine));
-        states.add(new Country ("Германия", R.drawable.germany));
-        states.add(new Country ("Франция", R.drawable.france));
-        states.add(new Country ("Беларусь", R.drawable.belarus));
-        states.add(new Country ("Румыния",  R.drawable.romania));
-        states.add(new Country ("США", R.drawable.usa));
-        states.add(new Country ("Китай", R.drawable.china));
+        states.add(new Country ("Индия", R.drawable.india,"Нью-Дели",3500));
+        states.add(new Country ("Молдова", R.drawable.moldova,"Кишинёв",200));
+        states.add(new Country ("Казахстан",  R.drawable.kazakhstan,"Астана",550));
+        states.add(new Country ("Украина", R.drawable.ukraine,"Киев",2800));
+        states.add(new Country ("Германия", R.drawable.germany,"Берлин",550));
+        states.add(new Country ("Франция", R.drawable.france,"Париж",1890));
+        states.add(new Country ("Беларусь", R.drawable.belarus,"Минск",1080));
+        states.add(new Country ("Румыния",  R.drawable.romania,"Бухарест",760));
+        states.add(new Country ("США", R.drawable.usa,"Вашингтон",2330));
+        states.add(new Country ("Китай", R.drawable.china,"Пекин",3200));
     }
+
+
 }
